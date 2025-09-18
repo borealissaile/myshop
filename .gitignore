@@ -1,0 +1,40 @@
+# 📦 Dependências (não versionar)
+/node_modules/
+.pnp/
+.pnp.js
+
+# 🧪 Testes
+/coverage/
+
+# 🚀 Build de produção (gerado automaticamente)
+/build/
+/dist/
+
+# 🔐 Arquivos sensíveis
+.env
+.env.local
+.env.*.local
+
+# 🗂️ Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# 📝 Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 🧠 IDEs e editores
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# 📷 Arquivos temporários
+*.log
+*.tmp
+*.swp
+
+# 🔧 Configurações específicas (opcional)
+*.bak
+*.orig
