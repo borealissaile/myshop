@@ -1,13 +1,39 @@
 import { FiShoppingCart } from "react-icons/fi";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import * as S from "./styles";
 import { Product } from "../../data/products";
+import { useDispatch, useSelector } from "react-redux";
+import { RootReducer } from "../../redux/root-reducer";
+import * as S from "./styles";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { cart } = useSelector(
+    (rootReducer: RootReducer) => rootReducer.cartReducer
+  );
+  const dispatch = useDispatch();
+
+  // variável booleana qque informa se o produto está no carrinho
+  const isProductOnCart =
+    cart.find((productOnCart) => product.id === productOnCart.id) !== undefined;
+
+  function handleAddProductToCart() {
+    // despachar a action de adicionar o produto ao carrinho
+    dispatch({
+      type: "cart/add-product",
+      payload: product,
+    });
+  }
+
+  function handleRemoveProductToCart() {
+    dispatch({
+      type: "cart/remove-product",
+      payload: product,
+    });
+  }
+
   return (
     <S.Card>
       <S.ProductImage src={product.image} alt={product.description} />
@@ -30,10 +56,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </S.ReviewPriceContainer>
 
       <S.AddToCartButtonWrapper>
-        <S.AddToCartButton>
-          Adicionar ao carrinho
-          <FiShoppingCart />
-        </S.AddToCartButton>
+        {isProductOnCart ? (
+          <S.RemoveFromCartButton onClick={handleRemoveProductToCart}>
+            Remover do carrinho
+            <FiShoppingCart />
+          </S.RemoveFromCartButton>
+        ) : (
+          <S.AddToCartButton onClick={handleAddProductToCart}>
+            Adicionar ao carrinho
+            <FiShoppingCart />
+          </S.AddToCartButton>
+        )}
       </S.AddToCartButtonWrapper>
     </S.Card>
   );
